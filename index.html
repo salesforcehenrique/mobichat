@@ -13,7 +13,7 @@
                     'Mobi_Chat',
                     'https://segimob--staging.sandbox.my.site.com/ESWMobiChat1763126750633',
                     {
-                        scrt2URL: 'https://segimob--staging.sandbox.my.salesforce-scrt.com'
+                        scrt2URL: 'https://segimob--staging.sandbox.my.site.com'
                     }
                 );
             } catch (err) {
@@ -21,21 +21,18 @@
             }
         }
 
-        // Executa init SOMENTE após DOM estar pronto
         document.addEventListener("DOMContentLoaded", function () {
-            // bootstrap.min.js vai carregar e então chamar initEmbeddedMessaging via onload
+            // A inicialização ocorre via onload do script abaixo
         });
     </script>
 
-    <script
-        type="text/javascript"
-        src="https://segimob--staging.sandbox.my.site.com/ESWMobiChat1763126750633/assets/js/bootstrap.min.js"
-        onload="initEmbeddedMessaging()">
+    <script type="text/javascript"
+            src="https://segimob--staging.sandbox.my.site.com/ESWMobiChat1763126750633/assets/js/bootstrap.min.js"
+            onload="initEmbeddedMessaging()">
     </script>
 </head>
 
 <body>
-    <!-- Container obrigatório para o iframe ser inserido -->
     <div id="embeddedMessaging"></div>
 </body>
 </html>
