@@ -3,28 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <title>MobiChat</title>
-    <script type='text/javascript'>
+    <script type="text/javascript">
         function initEmbeddedMessaging() {
             try {
                 embeddedservice_bootstrap.settings.language = 'pt_BR';
+
                 embeddedservice_bootstrap.init(
                     '00D88000006FQzd',
                     'Mobi_Chat',
                     'https://segimob--staging.sandbox.my.site.com/ESWMobiChat1763126750633',
                     {
-                        scrt2URL: 'https://segimob--staging.sandbox.my.salesforce-scrt.com'
+                        scrt2URL: 'https://segimob--staging.sandbox.my.site.com'
                     }
-                 );
+                );
             } catch (err) {
                 console.error('Error loading Embedded Messaging: ', err);
             }
-        };
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            // A inicialização ocorre via onload do script abaixo
+        });
     </script>
-    <!-- O atributo 'defer' garante que o script só execute após o HTML ser carregado -->
-    <script type='text/javascript' src='https://segimob--staging.sandbox.my.site.com/ESWMobiChat1763126750633/assets/js/bootstrap.min.js' defer onload='initEmbeddedMessaging( )'></script>
+
+    <script type="text/javascript"
+            src="https://segimob--staging.sandbox.my.site.com/ESWMobiChat1763126750633/assets/js/bootstrap.min.js"
+            onload="initEmbeddedMessaging()">
+    </script>
 </head>
+
 <body>
-    <!-- O elemento onde o chat será renderizado -->
     <div id="embeddedMessaging"></div>
 </body>
 </html>
