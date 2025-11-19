@@ -1,52 +1,52 @@
-<style>
-  html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-  }
-  #embeddedMessaging {
-    height: 100vh;
-  }
-</style>
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <title>MobiChat</title>
-    <script type='text/javascript'>
-	function initEmbeddedMessaging() {
-		try {
-			embeddedservice_bootstrap.settings.language = 'pt_BR'; // For example, enter 'en' or 'en-US'
+  <meta charset="UTF-8">
+  <title>MobiChat</title>
+  <link rel="icon" type="image/x-icon" href="/mobichat/favicon.ico" />
 
-			embeddedservice_bootstrap.init(
-				'00D88000006FQzd',
-				'Mobinho',
-				'https://segimob--staging.sandbox.my.site.com/ESWMobinho1763566959469',
-				{
-					scrt2URL: 'https://segimob--staging.sandbox.my.salesforce-scrt.com'
-				}
-			);
-		} catch (err) {
-			console.error('Error loading Embedded Messaging: ', err);
-		}
-	};
-</script>
-	<link rel="icon" type="image/x-icon" href="/mobichat/favicon.ico">
-<script type='text/javascript' src='https://segimob--staging.sandbox.my.site.com/ESWMobinho1763566959469/assets/js/bootstrap.min.js' onload='initEmbeddedMessaging()'></script>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+    #embeddedMessaging {
+      height: 100vh;
+    }
+  </style>
 
+  <script type="text/javascript">
+    function initEmbeddedMessaging() {
+      try {
+        embeddedservice_bootstrap.settings.language = 'pt_BR';
+
+        embeddedservice_bootstrap.init(
+          '00D88000006FQzd', // Org Id
+          '0Mj880000014OsnCAE', // Channel Id (real)
+          'https://segimob--staging.sandbox.my.site.com/ESWMobinho1763566959469', // Site endpoint
+          {
+            scrt2URL: 'https://segimob--staging.sandbox.my.salesforce-scrt.com'
+          }
+        );
+      } catch (err) {
+        console.error('Erro ao carregar o Embedded Messaging:', err);
+      }
+    }
+  </script>
+
+  <script
+    src="https://segimob--staging.sandbox.my.site.com/ESWMobinho1763566959469/assets/js/bootstrap.min.js"
+    onload="if (typeof embeddedservice_bootstrap !== 'undefined') initEmbeddedMessaging();"
+  ></script>
 </head>
 
 <body>
   <div id="embeddedMessaging"></div>
+
   <script>
-    console.log("Página carregada");
+    console.log("Página carregada.");
+    document.body.style.background = '#f0f0f0';
   </script>
 </body>
-
-<script>
-  console.log("Página carregada.");
-  document.body.style.background = '#f0f0f0';
-</script>
-
 </html>
