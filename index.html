@@ -1,9 +1,13 @@
-<html>
+<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
+    <meta charset="UTF-8">
+    <title>MobiChat</title>
     <script type="text/javascript">
         function initEmbeddedMessaging() {
             try {
                 embeddedservice_bootstrap.settings.language = 'pt_BR';
+
                 embeddedservice_bootstrap.init(
                     '00D88000006FQzd',
                     'Mobi_Chat',
@@ -17,18 +21,21 @@
             }
         }
 
+        // Executa init SOMENTE após DOM estar pronto
         document.addEventListener("DOMContentLoaded", function () {
-            initEmbeddedMessaging();
+            // bootstrap.min.js vai carregar e então chamar initEmbeddedMessaging via onload
         });
     </script>
 
     <script
         type="text/javascript"
-        src="https://segimob--staging.sandbox.my.site.com/ESWMobiChat1763126750633/assets/js/bootstrap.min.js">
+        src="https://segimob--staging.sandbox.my.site.com/ESWMobiChat1763126750633/assets/js/bootstrap.min.js"
+        onload="initEmbeddedMessaging()">
     </script>
 </head>
 
 <body>
+    <!-- Container obrigatório para o iframe ser inserido -->
     <div id="embeddedMessaging"></div>
 </body>
 </html>
