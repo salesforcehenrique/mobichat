@@ -16,27 +16,29 @@
     }
   </style>
 
-  <script type="text/javascript">
-    function initEmbeddedMessaging() {
-      try {
-        embeddedservice_bootstrap.settings.language = 'pt_BR';
+  <script type='text/javascript'>
+	function initEmbeddedMessaging() {
+		try {
+			embeddedservice_bootstrap.settings.language = 'pt_BR'; // For example, enter 'en' or 'en-US'
 
-        embeddedservice_bootstrap.init(
-          '00D88000006FQzd', // Org Id
-          '0Mj880000014OsnCAE', // Channel Id (real)
-          'https://segimob--staging.sandbox.my.site.com/ESWMobinho1763566959469', // Site endpoint
-          {
-            scrt2URL: 'https://segimob--staging.sandbox.my.salesforce-scrt.com'
-          }
-        );
-      } catch (err) {
-        console.error('Erro ao carregar o Embedded Messaging:', err);
-      }
-    }
-  </script>
+			embeddedservice_bootstrap.init(
+				'00D88000006FQzd',
+				'Mobi_Chat_POC',
+				'https://segimob--staging.sandbox.my.site.com/ESWMobiChat1763126750633',
+				{
+					scrt2URL: 'https://segimob--staging.sandbox.my.salesforce-scrt.com'
+				}
+			);
+		} catch (err) {
+			console.error('Error loading Embedded Messaging: ', err);
+		}
+	};
+</script>
+<script type='text/javascript' src='https://segimob--staging.sandbox.my.site.com/ESWMobiChat1763126750633/assets/js/bootstrap.min.js' onload='initEmbeddedMessaging()'></script>
+
 
   <script
-    src="https://segimob--staging.sandbox.my.site.com/ESWMobinho1763566959469/assets/js/bootstrap.min.js"
+    src="https://segimob--staging.sandbox.my.site.com/ESW_Mobi_Chat_17631267506331/assets/js/bootstrap.min.js"
     onload="if (typeof embeddedservice_bootstrap !== 'undefined') initEmbeddedMessaging();"
   ></script>
 </head>
