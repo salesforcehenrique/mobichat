@@ -15,6 +15,11 @@
       height: 100vh;
     }
   </style>
+</head>
+
+<body>
+  <div id="embeddedMessaging"></div>
+  <div id="my-messaging-container"></div>
 
   <script type="text/javascript">
     function initEmbeddedMessaging() {
@@ -35,19 +40,14 @@
     }
   </script>
 
+  <!-- Carregado no final do body para evitar null no appendChild -->
   <script 
-    type="text/javascript" 
+    type="text/javascript"
     src="https://segimob--staging.sandbox.my.site.com/ESWMobinho1763566959469/assets/js/bootstrap.min.js"
     onload="initEmbeddedMessaging()">
   </script>
-</head>
-
-<body>
-  <div id="embeddedMessaging"></div>
-  <div id="my-messaging-container"></div>
 
   <script>
-    console.log("Página carregada.");
     document.body.style.background = "#f0f0f0";
   </script>
 </body>
