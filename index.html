@@ -16,41 +16,35 @@
     }
   </style>
 
-  <script type='text/javascript'>
-	function initEmbeddedMessaging() {
-		try {
-			embeddedservice_bootstrap.settings.language = 'pt_BR';
+  <script type="text/javascript">
+    function initEmbeddedMessaging() {
+      try {
+        embeddedservice_bootstrap.settings.language = 'pt_BR';
 
-			embeddedservice_bootstrap.init(
-				'00D88000006FQzd',
-				'Mobi_Chat_POC',
-				'https://segimob--staging.sandbox.my.site.com/ESWMobiChat1763126750633',
-				{
-					scrt2URL: 'https://segimob--staging.sandbox.my.salesforce-scrt.com'
-				}
-			);
-		} catch (err) {
-			console.error('Error loading Embedded Messaging: ', err);
-		}
-	};
+        embeddedservice_bootstrap.init(
+          '00D88000006FQzd',
+          'Mobi_Chat_POC',
+          'https://segimob--staging.sandbox.my.site.com/ESWMobiChat1763126750633',
+          {
+            scrt2URL: 'https://segimob--staging.sandbox.my.salesforce-scrt.com'
+          }
+        );
+      } catch (err) {
+        console.error('Error loading Embedded Messaging: ', err);
+      }
+    }
   </script>
 
-  <script type='text/javascript' src='https://segimob--staging.sandbox.my.site.com/ESWMobiChat1763126750633/assets/js/bootstrap.min.js' onload='initEmbeddedMessaging()'></script>
-  <script src="https://segimob--staging.sandbox.my.site.com/ESW_Mobi_Chat_17631267506331/assets/js/bootstrap.min.js"
-          onload="if (typeof embeddedservice_bootstrap !== 'undefined') initEmbeddedMessaging();">
+  <!-- Script do Web Chat carregado uma única vez -->
+  <script
+    src="https://segimob--staging.sandbox.my.site.com/ESWMobiChat1763126750633/assets/js/bootstrap.min.js"
+    onload="initEmbeddedMessaging()">
   </script>
 </head>
 
 <body>
   <div id="embeddedMessaging"></div>
-  <div id="my-messaging-container"></div> <!-- Inserted container -->
-
-  <script src="bootstrap.min.js"></script>
-  <script>
-    // Initialization call if needed
-    // window.agentforce_messaging.init();
-    // Or ensure the initEmbeddedMessaging function is called here
-  </script>
+  <div id="my-messaging-container"></div>
 
   <script>
     console.log("Página carregada.");
