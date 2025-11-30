@@ -21,24 +21,26 @@
   <div id="embeddedMessaging"></div>
   <div id="my-messaging-container"></div>
 
-  <script type="text/javascript">
-    function initEmbeddedMessaging() {
-      try {
-        embeddedservice_bootstrap.settings.language = 'pt_BR';
+ <script type='text/javascript'>
+	function initEmbeddedMessaging() {
+		try {
+			embeddedservice_bootstrap.settings.language = 'pt_BR'; // For example, enter 'en' or 'en-US'
 
-        embeddedservice_bootstrap.init(
-          '00D88000006FQzd',
-          'Mobinho',
-          'https://segimob--staging.sandbox.my.site.com/ESWMobinho1763566959469',
-          {
-            scrt2URL: 'https://segimob--staging.sandbox.my.salesforce-scrt.com'
-          }
-        );
-      } catch (err) {
-        console.error('Error loading Embedded Messaging:', err);
-      }
-    }
-  </script>
+			embeddedservice_bootstrap.init(
+				'00Dbe000002jTkf',
+				'Chat_Mobi',
+				'https://segimob--staging.sandbox.my.site.com/ESWChatMobi1764466409624',
+				{
+					scrt2URL: 'https://segimob--staging.sandbox.my.salesforce-scrt.com'
+				}
+			);
+		} catch (err) {
+			console.error('Error loading Embedded Messaging: ', err);
+		}
+	};
+</script>
+<script type='text/javascript' src='https://segimob--staging.sandbox.my.site.com/ESWChatMobi1764466409624/assets/js/bootstrap.min.js' onload='initEmbeddedMessaging()'></script>
+
 
   <!-- Carregado no final do body para evitar null no appendChild -->
   <script 
