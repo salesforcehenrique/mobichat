@@ -22,31 +22,42 @@
   <div id="my-messaging-container"></div>
 
   <!-- =========================== -->
-  <!-- SNIPPET PARA PASSAR DADOS   -->
+  <!-- VARIÁVEIS DE USUÁRIO LOGADO -->
   <!-- =========================== -->
 
   <script>
-    // Esses valores devem vir do seu site / backend
-    // SUBSTITUA pelos valores reais no runtime
+    // Esses valores devem vir do seu site / backend no runtime
     window.NomeUsuarioLogado = "João da Silva";
     window.CPFLogado = "12345678900";
     window.NomeConta = "Corretora XPTO";
     window.CodigoUsuario = "USR001";
-    window.CodigoConta = "ACC7788";
+    window.CodigoConta = "C-9";
   </script>
+
+  <!-- =========================== -->
+  <!-- INICIALIZAÇÃO DO MESSAGING -->
+  <!-- =========================== -->
 
   <script type="text/javascript">
     function initEmbeddedMessaging() {
       try {
-
         embeddedservice_bootstrap.settings.language = 'pt_BR';
 
-        /* ===============================================
-           CUSTOM DETAILS PARA ROUTING VIA OMNI-FLOW
-           =============================================== */
+        // Configuração principal do Enhanced Messaging
         embeddedservice_bootstrap.settings.embeddedserviceConfig = {
           messaging: {
             enabled: true,
+
+            // ✅ ESSENCIAL: envia dados ao Flow
+            prepopulatedPrechatFields: {
+              NomeUsuario: window.NomeUsuarioLogado || "",
+              CPF: window.CPFLogado || "",
+              NomeConta: window.NomeConta || "",
+              CodigoUsuario: window.CodigoUsuario || "",
+              CodigoConta: window.CodigoConta || ""
+            },
+
+            // ✅ OPCIONAL: mostra esses dados ao agente no console
             extraPrechatInfo: [
               { label: "NomeUsuario", value: window.NomeUsuarioLogado || "" },
               { label: "CPF", value: window.CPFLogado || "" },
@@ -57,13 +68,11 @@
           }
         };
 
-        /* ===============================================
-           INICIALIZAÇÃO ORIGINAL — MANTIDA
-           =============================================== */
+        // Inicializa o botão de messaging com seu site + org
         embeddedservice_bootstrap.init(
-          '00Dbe000002jTkf',
-          'Chat_Mobi',
-          'https://segimob--staging.sandbox.my.site.com/ESWChatMobi1764466409624',
+          '00Dbe000002jTkf', // ID da sua org
+          'Chat_Mobi',       // Nome do botão
+          'https://segimob--staging.sandbox.my.site.com/ESWChatMobi1764466409624', // Site endpoint
           {
             scrt2URL: 'https://segimob--staging.sandbox.my.salesforce-scrt.com'
           }
@@ -75,19 +84,14 @@
     };
   </script>
 
-
+  <!-- BOOTSTRAP SCRIPT DO BOTÃO (CORRETO) -->
   <script 
     type="text/javascript"
     src="https://segimob--staging.sandbox.my.site.com/ESWChatMobi1764466409624/assets/js/bootstrap.min.js"
     onload="initEmbeddedMessaging()">
   </script>
 
-  <script 
-    type="text/javascript"
-    src="https://segimob--staging.sandbox.my.site.com/ESWMobinho1763566959469/assets/js/bootstrap.min.js"
-    onload="initEmbeddedMessaging()">
-  </script>
-
+  <!-- OPCIONAL: estilo de fundo -->
   <script>
     document.body.style.background = "#f0f0f0";
   </script>
