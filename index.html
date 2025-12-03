@@ -1,73 +1,75 @@
-<script type='text/javascript'>
-    // Variáveis de contexto do usuário logado (simulação)
-    var NomeUsuarioLogado = "Igor Nogueira Silva";
-    var CPFLogado = "085.094.706-50";
-    var NomeConta = "Ita Corretora";
-    var CodigoUsuario = "U-16010";
-    var CodigoConta = "C-9";
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat com Salesforce</title>
+</head>
+<body>
+    <h1>Página de Teste do Chat</h1>
+    <p>O chat será carregado no canto inferior direito.</p>
 
-    var initESW = function(gslcSettings) {
-        embedded_svc.settings.displayHelpButton = true; // Exibe o botão de ajuda (chat)
-        embedded_svc.settings.language = ''; // Deixe vazio para usar o idioma do navegador
+    <script type='text/javascript'>
+        // Simulação de valores do site externo (usuário autenticado)
+        var NomeUsuarioLogado = "Igor Nogueira Silva";
+        var CPFLogado = "085.094.706-50";
+        var NomeConta = "Ita Corretora";
+        var CodigoUsuario = "U-16010";
+        var CodigoConta = "C-9";
 
-        // Configuração de dados de pré-chat
-        embedded_svc.settings.prechatDetails = [
-            // {label:"NomeUsuario", value: NomeUsuarioLogado, displayToAgent:true}, // Se você quiser que o agente veja o nome
-            // {label:"CPF", value: CPFLogado, displayToAgent:true}, // Se você quiser que o agente veja o CPF
-            {label:"NomeConta", value: NomeConta, displayToAgent:false},
-            {label:"CodigoUsuario", value: CodigoUsuario, displayToAgent:false},
-            {label:"CodigoConta", value: CodigoConta, displayToAgent:false}
-        ];
+        var initESW = function(gslcSettings) {
+            embedded_svc.settings.displayHelpButton = true;
+            embedded_svc.settings.language = '';
 
-        // Configuração de dados de pré-chat para o Flow (usando setCustomSalesforceChatData)
-        embedded_svc.settings.extraPrechatInfo = [
-            {
-                "entityName": "Contact",
-                "saveToTranscript": "NomeUsuario",
-                "entityFieldMaps": [
-                    {"fieldName": "FirstName", "doFind": false, "is
-                    exactMatch": false, "doCreate": true, "
-                    "label": "NomeUsuario"}
-                ]
-            },
-            // Adicione outras entidades e campos conforme a sua necessidade de busca e criação de registros
-        ];
+            // Pre-chat details que serão capturados pelo Flow via Transcript Fields
+            embedded_svc.settings.prechatDetails = [
+                { label: "NomeUsuario", value: NomeUsuarioLogado, displayToAgent: false },
+                { label: "CPF", value: CPFLogado, displayToAgent: false },
+                { label: "NomeConta", value: NomeConta, displayToAgent: false },
+                { label: "CodigoUsuario", value: CodigoUsuario, displayToAgent: false },
+                { label: "CodigoConta", value: CodigoConta, displayToAgent: false }
+            ];
 
-        // **A forma mais direta para o Flow é usar o prechatDetails e mapear no Flow:**
-        embedded_svc.settings.prechatDetails = [
-            {label:"NomeUsuario", value: NomeUsuarioLogado, displayToAgent:false},
-            {label:"CPF", value: CPFLogado, displayToAgent:false},
-            {label:"NomeConta", value: NomeConta, displayToAgent:false},
-            {label:"CodigoUsuario", value: CodigoUsuario, displayToAgent:false},
-            {label:"CodigoConta", value: CodigoConta, displayToAgent:false}
-        ];
-        
-        // O restante do seu código de inicialização do Embedded Service Chat...
-        embedded_svc.init(
-            'https://[SEU_DOMINIO].my.salesforce.com',
-            'https://[SEU_DOMINIO].my.salesforce-sites.com/liveagent',
-            gslcSettings.baseLiveAgentContentURL,
-            '[ORG_ID]',
-            '[DEPLOYMENT_ID]',
-            {
-                baseLiveAgentContentURL: gslcSettings.baseLiveAgentContentURL,
-                deploymentId: gslcSettings.deploymentId,
-                buttonId: gslcSettings.buttonId,
-                baseLiveAgentURL: gslcSettings.baseLiveAgentURL,
-                eswConfigDevName: gslcSettings.eswConfigDevName,
-                isOfflineSupportEnabled: gslcSettings.isOfflineSupportEnabled
-            }
-         );
-    };
-
-    if (!window.embedded_svc) {
-        var s = document.createElement('script');
-        s.setAttribute('src', 'https://segimob--staging.my.salesforce.com/embeddedservice/5.0/esw.min.js' );
-        s.onload = function() {
-            initESW(null);
+            embedded_svc.init(
+                'https://segimob--staging.sandbox.my.salesforce.com',
+                'https://segimob--staging.sandbox.my.salesforce-sites.com/liveagent',
+                gslcSettings.baseLiveAgentContentURL,
+                '[ORG_ID]',
+                '[DEPLOYMENT_ID]',
+                {
+                    baseLiveAgentContentURL: gslcSettings.baseLiveAgentContentURL,
+                    deploymentId: gslcSettings.deploymentId,
+                    buttonId: gslcSettings.buttonId,
+                    baseLiveAgentURL: gslcSettings.baseLiveAgentURL,
+                    eswConfigDevName: gslcSettings.eswConfigDevName,
+                    isOfflineSupportEnabled: gslcSettings.isOfflineSupportEnabled
+                }
+            );
         };
-        document.body.appendChild(s);
-    } else {
-        initESW('https://segimob--staging.my.salesforce.com' );
-    }
-</script>
+
+        if (!window.embedded_svc) {
+            var s = document.createElement('script');
+            s.setAttribute('src', 'https://segimob--staging.sandbox.my.salesforce.com/embeddedservice/5.0/esw.min.js');
+            s.onload = function() {
+                initESW({
+                    baseLiveAgentContentURL: 'https://segimob--staging.sandbox.my.salesforce.com/content',
+                    deploymentId: '[DEPLOYMENT_ID]',
+                    buttonId: '[BUTTON_ID]',
+                    baseLiveAgentURL: 'https://segimob--staging.sandbox.my.salesforce.com/chat',
+                    eswConfigDevName: '[ESW_CONFIG_DEV_NAME]',
+                    isOfflineSupportEnabled: false
+                });
+            };
+            document.body.appendChild(s);
+        } else {
+            initESW({
+                baseLiveAgentContentURL: 'https://segimob--staging.sandbox.my.salesforce.com/content',
+                deploymentId: '[DEPLOYMENT_ID]',
+                buttonId: '[BUTTON_ID]',
+                baseLiveAgentURL: 'https://segimob--staging.sandbox.my.salesforce.com/chat',
+                eswConfigDevName: '[ESW_CONFIG_DEV_NAME]',
+                isOfflineSupportEnabled: false
+            });
+        }
+    </script>
+</body>
+</html>
