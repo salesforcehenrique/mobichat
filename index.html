@@ -1,100 +1,113 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <title>MobiChat</title>
-  <link rel="icon" type="image/x-icon" href="/mobichat/favicon.ico" />
+<script type='text/javascript'>
+    // Variáveis de contexto do usuário logado (simulação)
+    var NomeUsuarioLogado = "Igor Nogueira Silva";
+    var CPFLogado = "085.094.706-50";
+    var NomeConta = "Ita Corretora";
+    var CodigoUsuario = "U-16010";
+    var CodigoConta = "C-9";
 
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-    }
-    #embeddedMessaging {
-      height: 100vh;
-    }
-  </style>
-</head>
+    var initESW = function(gslcSettings) {
+        embedded_svc.settings.displayHelpButton = true; // Exibe o botão de ajuda (chat)
+        embedded_svc.settings.language = ''; // Deixe vazio para usar o idioma do navegador
 
-<body>
-  <div id="embeddedMessaging"></div>
-  <div id="my-messaging-container"></div>
+        // Configuração de dados de pré-chat
+        embedded_svc.settings.prechatDetails = [
+            // {label:"NomeUsuario", value: NomeUsuarioLogado, displayToAgent:true}, // Se você quiser que o agente veja o nome
+            // {label:"CPF", value: CPFLogado, displayToAgent:true}, // Se você quiser que o agente veja o CPF
+            {label:"NomeConta", value: NomeConta, displayToAgent:false},
+            {label:"CodigoUsuario", value: CodigoUsuario, displayToAgent:false},
+            {label:"CodigoConta", value: CodigoConta, displayToAgent:false}
+        ];
 
-  <!-- =========================== -->
-  <!-- VARIÁVEIS DE USUÁRIO LOGADO -->
-  <!-- =========================== -->
-
-  <script>
-    // Esses valores devem vir do seu site / backend no runtime
-    window.NomeUsuarioLogado = "Igor Nogueira Silva";
-    window.CPFLogado = "085.094.706-50";
-    window.NomeConta = "Ita Corretora";
-    window.CodigoUsuario = "U-16010";
-    window.CodigoConta = "C-9";
-  </script>
-
-  <!-- =========================== -->
-  <!-- INICIALIZAÇÃO DO MESSAGING -->
-  <!-- =========================== -->
-
-  <script type="text/javascript">
-    function initEmbeddedMessaging() {
-      try {
-        embeddedservice_bootstrap.settings.language = 'pt_BR';
-
-        // Configuração principal do Enhanced Messaging
-        embeddedservice_bootstrap.settings.embeddedserviceConfig = {
-          messaging: {
-            enabled: true,
-
-            // ✅ ESSENCIAL: envia dados ao Flow
-            prepopulatedPrechatFields: {
-              NomeUsuario: window.NomeUsuarioLogado || "",
-              CPF: window.CPFLogado || "",
-              NomeConta: window.NomeConta || "",
-              CodigoUsuario: window.CodigoUsuario || "",
-              CodigoConta: window.CodigoConta || ""
+        // Configuração de dados de pré-chat para o Flow (usando setCustomSalesforceChatData)
+        // O seu XML sugere que você está usando esta abordagem, que é a mais moderna e recomendada.
+        embedded_svc.settings.extraPrechatInfo = [
+            {
+                "entityName": "Contact",
+                "saveToTranscript": "NomeUsuario",
+                "entityFieldMaps": [
+                    {"fieldName": "FirstName", "doFind": false, "is
+                    exactMatch": false, "doCreate": true, "
+                    "label": "NomeUsuario"}
+                ]
             },
+            // Adicione outras entidades e campos conforme a sua necessidade de busca e criação de registros
+        ];
 
-            // ✅ OPCIONAL: mostra esses dados ao agente no console
-            extraPrechatInfo: [
-              { label: "NomeUsuario", value: window.NomeUsuarioLogado || "" },
-              { label: "CPF", value: window.CPFLogado || "" },
-              { label: "NomeConta", value: window.NomeConta || "" },
-              { label: "CodigoUsuario", value: window.CodigoUsuario || "" },
-              { label: "CodigoConta", value: window.CodigoConta || "" }
-            ]
-          }
-        };
+        // Envio de dados customizados para o Flow (Variáveis de Entrada)
+        // Estes são os dados que o seu Flow (embeddedServiceChatEnhanced) irá receber como variáveis de entrada.
+        embedded_svc.settings.extraPrechatInfo = [
+            {
+                "entityName": "Case", // Entidade que será criada ou associada
+                "saveToTranscript": "NomeUsuario",
+                "entityFieldMaps": [
+                    {"fieldName": "Subject", "doFind": false, "isExactMatch": false, "doCreate": true, "label": "NomeUsuario"}
+                ]
+            }
+        ];
 
-        // Inicializa o botão de messaging com seu site + org
-        embeddedservice_bootstrap.init(
-          '00Dbe000002jTkf', // ID da sua org
-          'Chat_Mobi',       // Nome do botão
-          'https://segimob--staging.sandbox.my.site.com/ESWChatMobi1764466409624', // Site endpoint
-          {
-            scrt2URL: 'https://segimob--staging.sandbox.my.salesforce-scrt.com'
-          }
-        );
+        // **A forma mais direta para o Flow é usar o prechatDetails e mapear no Flow:**
+        embedded_svc.settings.prechatDetails = [
+            {label:"NomeUsuario", value: NomeUsuarioLogado, displayToAgent:false},
+            {label:"CPF", value: CPFLogado, displayToAgent:false},
+            {label:"NomeConta", value: NomeConta, displayToAgent:false},
+            {label:"CodigoUsuario", value: CodigoUsuario, displayToAgent:false},
+            {label:"CodigoConta", value: CodigoConta, displayToAgent:false}
+        ];
+        
+        // **OU, se você estiver usando a abordagem de setCustomSalesforceChatData no seu Flow:**
+        // Você deve garantir que a função seja chamada após o carregamento do Live Agent.
+        embedded_svc.addEventHandler("onChatEstablished", function(event) {
+            embedded_svc.liveagentAPI.setCustomSalesforceChatData([
+                {
+                    "name": "NomeUsuario",
+                    "value": NomeUsuarioLogado
+                },
+                {
+                    "name": "CPF",
+                    "value": CPFLogado
+                },
+                {
+                    "name": "NomeConta",
+                    "value": NomeConta
+                },
+                {
+                    "name": "CodigoUsuario",
+                    "value": CodigoUsuario
+                },
+                {
+                    "name": "CodigoConta",
+                    "value": CodigoConta
+                }
+            ]);
+        });
 
-      } catch (err) {
-        console.error('Error loading Embedded Messaging: ', err);
-      }
+        // O restante do seu código de inicialização do Embedded Service Chat...
+        embedded_svc.init(
+            'https://[SEU_DOMINIO].my.salesforce.com',
+            'https://[SEU_DOMINIO].my.salesforce-sites.com/liveagent',
+            gslcSettings.baseLiveAgentContentURL,
+            '[ORG_ID]',
+            '[DEPLOYMENT_ID]',
+            {
+                baseLiveAgentContentURL: gslcSettings.baseLiveAgentContentURL,
+                deploymentId: gslcSettings.deploymentId,
+                buttonId: gslcSettings.buttonId,
+                baseLiveAgentURL: gslcSettings.baseLiveAgentURL,
+                eswConfigDevName: gslcSettings.eswConfigDevName,
+                isOfflineSupportEnabled: gslcSettings.isOfflineSupportEnabled
+            }
+         );
     };
-  </script>
 
-  <!-- BOOTSTRAP SCRIPT DO BOTÃO (CORRETO) -->
-  <script 
-    type="text/javascript"
-    src="https://segimob--staging.sandbox.my.site.com/ESWChatMobi1764466409624/assets/js/bootstrap.min.js"
-    onload="initEmbeddedMessaging()">
-  </script>
-
-  <!-- OPCIONAL: estilo de fundo -->
-  <script>
-    document.body.style.background = "#f0f0f0";
-  </script>
-
-</body>
-</html>
+    if (!window.embedded_svc) {
+        var s = document.createElement('script');
+        s.setAttribute('src', 'https://[SEU_DOMINIO].my.salesforce.com/embeddedservice/5.0/esw.min.js' );
+        s.onload = function() {
+            initESW(null);
+        };
+        document.body.appendChild(s);
+    } else {
+        initESW('https://[SEU_DOMINIO].my.salesforce.com' );
+    }
+</script>
