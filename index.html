@@ -9,62 +9,28 @@
   <p>O chat será carregado no canto inferior direito.</p>
 
   <script type="text/javascript">
-    // Simulando dados do usuário logado
-    var preChatNomeDoUsuarioLogado = "Igor Nogueira Silva";
-    var preChatCPF = "085.094.706-50";
-    var preChatCodigoConta = "C-9";
-    var preChatCodigoUsuario = "U-16010";
+    function initEmbeddedMessaging() {
+      try {
+        embeddedservice_bootstrap.settings.language = 'pt_BR';
 
-    var initESW = function (gslcSettings) {
-      embedded_svc.settings.displayHelpButton = true;
-      embedded_svc.settings.language = "";
-
-      // PrechatDetails com os nomes EXATOS das variáveis do Flow
-      embedded_svc.settings.prechatDetails = [
-        { label: "preChatNomeDoUsuarioLogado", value: preChatNomeDoUsuarioLogado, displayToAgent: false },
-        { label: "preChatCPF", value: preChatCPF, displayToAgent: false },
-        { label: "preChatCodigoConta", value: preChatCodigoConta, displayToAgent: false },
-        { label: "preChatCodigoUsuario", value: preChatCodigoUsuario, displayToAgent: false }
-      ];
-
-      embedded_svc.init(
-        "https://segimob--staging.sandbox.my.salesforce.com",
-        "https://segimob--staging.sandbox.my.salesforce-sites.com/liveagent",
-        gslcSettings.baseLiveAgentContentURL,
-        "00Dbe000002jTkf", // ORG_ID
-        "04Ibe0000002qCDEA", // DEPLOYMENT_ID
-        {
-          baseLiveAgentContentURL: gslcSettings.baseLiveAgentContentURL,
-          deploymentId: "04Ibe0000002qCDEA",
-          baseLiveAgentURL: gslcSettings.baseLiveAgentURL,
-          eswConfigDevName: "ESW_Chat_Mobi_17644664096241",
-          isOfflineSupportEnabled: false
-        }
-      );
-    };
-
-    if (!window.embedded_svc) {
-      var s = document.createElement("script");
-      s.setAttribute("src", "https://segimob--staging.sandbox.my.salesforce-sites.com/embeddedservice/5.0/esw.min.js");
-      s.onload = function () {
-        initESW({
-          baseLiveAgentContentURL: "https://segimob--staging.sandbox.my.salesforce-sites.com/content",
-          baseLiveAgentURL: "https://segimob--staging.sandbox.my.salesforce-sites.com/chat",
-          deploymentId: "04Ibe0000002qCDEA",
-          eswConfigDevName: "ESW_Chat_Mobi_17644664096241",
-          isOfflineSupportEnabled: false
-        });
-      };
-      document.body.appendChild(s);
-    } else {
-      initESW({
-        baseLiveAgentContentURL: "https://segimob--staging.sandbox.my.salesforce-sites.com/content",
-        baseLiveAgentURL: "https://segimob--staging.sandbox.my.salesforce-sites.com/chat",
-        deploymentId: "04Ibe0000002qCDEA",
-        eswConfigDevName: "ESW_Chat_Mobi_17644664096241",
-        isOfflineSupportEnabled: false
-      });
+        embeddedservice_bootstrap.init(
+          '00Dbe000002jTkf', // ORG_ID
+          'Chat_Mobi',       // Embedded Service Config Name
+          'https://segimob--staging.sandbox.my.site.com/ESWChatMobi1764466409624',
+          {
+            scrt2URL: 'https://segimob--staging.sandbox.my.salesforce-scrt.com'
+          }
+        );
+      } catch (err) {
+        console.error('Erro ao carregar o chat:', err);
+      }
     }
+  </script>
+
+  <script 
+    type='text/javascript' 
+    src='https://segimob--staging.sandbox.my.site.com/ESWChatMobi1764466409624/assets/js/bootstrap.min.js' 
+    onload='initEmbeddedMessaging()'>
   </script>
 </body>
 </html>
