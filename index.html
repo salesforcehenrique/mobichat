@@ -9,39 +9,36 @@
     <p>O chat será carregado no canto inferior direito.</p>
 
     <script type='text/javascript'>
-        // Simulação de valores do site externo (usuário autenticado)
-        var NomeUsuarioLogado = "Igor Nogueira Silva";
-        var CPFLogado = "085.094.706-50";
-        var NomeConta = "Ita Corretora";
-        var CodigoUsuario = "U-16010";
-        var CodigoConta = "C-9";
+        // Valores simulados vindos do site externo
+        var preChatNomeDoUsuarioLogado = "Igor Nogueira Silva";
+        var preChatCPF = "085.094.706-50";
+        var preChatCodigoConta = "C-9";
+        var preChatCodigoUsuario = "U-16010";
 
         var initESW = function(gslcSettings) {
             embedded_svc.settings.displayHelpButton = true;
             embedded_svc.settings.language = '';
 
-            // Pre-chat details que serão capturados pelo Flow via Transcript Fields
+            // Labels EXATOS usados no Flow
             embedded_svc.settings.prechatDetails = [
-                { label: "NomeUsuario", value: NomeUsuarioLogado, displayToAgent: false },
-                { label: "CPF", value: CPFLogado, displayToAgent: false },
-                { label: "NomeConta", value: NomeConta, displayToAgent: false },
-                { label: "CodigoUsuario", value: CodigoUsuario, displayToAgent: false },
-                { label: "CodigoConta", value: CodigoConta, displayToAgent: false }
+                { label: "preChatNomeDoUsuarioLogado", value: preChatNomeDoUsuarioLogado, displayToAgent: false },
+                { label: "preChatCPF", value: preChatCPF, displayToAgent: false },
+                { label: "preChatCodigoConta", value: preChatCodigoConta, displayToAgent: false },
+                { label: "preChatCodigoUsuario", value: preChatCodigoUsuario, displayToAgent: false }
             ];
 
             embedded_svc.init(
                 'https://segimob--staging.sandbox.my.salesforce.com',
                 'https://segimob--staging.sandbox.my.salesforce-sites.com/liveagent',
                 gslcSettings.baseLiveAgentContentURL,
-                '[ORG_ID]',
-                '[DEPLOYMENT_ID]',
+                '00Dbe000002jTkf',
+                '04Ibe0000002qCDEA',
                 {
                     baseLiveAgentContentURL: gslcSettings.baseLiveAgentContentURL,
-                    deploymentId: gslcSettings.deploymentId,
-                    buttonId: gslcSettings.buttonId,
+                    deploymentId: '04Ibe0000002qCDEA',
                     baseLiveAgentURL: gslcSettings.baseLiveAgentURL,
-                    eswConfigDevName: gslcSettings.eswConfigDevName,
-                    isOfflineSupportEnabled: gslcSettings.isOfflineSupportEnabled
+                    eswConfigDevName: 'ESW_Chat_Mobi_17644664096241',
+                    isOfflineSupportEnabled: false
                 }
             );
         };
@@ -52,10 +49,9 @@
             s.onload = function() {
                 initESW({
                     baseLiveAgentContentURL: 'https://segimob--staging.sandbox.my.salesforce.com/content',
-                    deploymentId: '[DEPLOYMENT_ID]',
-                    buttonId: '[BUTTON_ID]',
                     baseLiveAgentURL: 'https://segimob--staging.sandbox.my.salesforce.com/chat',
-                    eswConfigDevName: '[ESW_CONFIG_DEV_NAME]',
+                    deploymentId: '04Ibe0000002qCDEA',
+                    eswConfigDevName: 'ESW_Chat_Mobi_17644664096241',
                     isOfflineSupportEnabled: false
                 });
             };
@@ -63,10 +59,9 @@
         } else {
             initESW({
                 baseLiveAgentContentURL: 'https://segimob--staging.sandbox.my.salesforce.com/content',
-                deploymentId: '[DEPLOYMENT_ID]',
-                buttonId: '[BUTTON_ID]',
                 baseLiveAgentURL: 'https://segimob--staging.sandbox.my.salesforce.com/chat',
-                eswConfigDevName: '[ESW_CONFIG_DEV_NAME]',
+                deploymentId: '04Ibe0000002qCDEA',
+                eswConfigDevName: 'ESW_Chat_Mobi_17644664096241',
                 isOfflineSupportEnabled: false
             });
         }
