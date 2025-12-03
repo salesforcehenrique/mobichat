@@ -20,7 +20,6 @@
         ];
 
         // Configuração de dados de pré-chat para o Flow (usando setCustomSalesforceChatData)
-        // O seu XML sugere que você está usando esta abordagem, que é a mais moderna e recomendada.
         embedded_svc.settings.extraPrechatInfo = [
             {
                 "entityName": "Contact",
@@ -34,18 +33,6 @@
             // Adicione outras entidades e campos conforme a sua necessidade de busca e criação de registros
         ];
 
-        // Envio de dados customizados para o Flow (Variáveis de Entrada)
-        // Estes são os dados que o seu Flow (embeddedServiceChatEnhanced) irá receber como variáveis de entrada.
-        embedded_svc.settings.extraPrechatInfo = [
-            {
-                "entityName": "Case", // Entidade que será criada ou associada
-                "saveToTranscript": "NomeUsuario",
-                "entityFieldMaps": [
-                    {"fieldName": "Subject", "doFind": false, "isExactMatch": false, "doCreate": true, "label": "NomeUsuario"}
-                ]
-            }
-        ];
-
         // **A forma mais direta para o Flow é usar o prechatDetails e mapear no Flow:**
         embedded_svc.settings.prechatDetails = [
             {label:"NomeUsuario", value: NomeUsuarioLogado, displayToAgent:false},
@@ -55,33 +42,6 @@
             {label:"CodigoConta", value: CodigoConta, displayToAgent:false}
         ];
         
-        // **OU, se você estiver usando a abordagem de setCustomSalesforceChatData no seu Flow:**
-        // Você deve garantir que a função seja chamada após o carregamento do Live Agent.
-        embedded_svc.addEventHandler("onChatEstablished", function(event) {
-            embedded_svc.liveagentAPI.setCustomSalesforceChatData([
-                {
-                    "name": "NomeUsuario",
-                    "value": NomeUsuarioLogado
-                },
-                {
-                    "name": "CPF",
-                    "value": CPFLogado
-                },
-                {
-                    "name": "NomeConta",
-                    "value": NomeConta
-                },
-                {
-                    "name": "CodigoUsuario",
-                    "value": CodigoUsuario
-                },
-                {
-                    "name": "CodigoConta",
-                    "value": CodigoConta
-                }
-            ]);
-        });
-
         // O restante do seu código de inicialização do Embedded Service Chat...
         embedded_svc.init(
             'https://[SEU_DOMINIO].my.salesforce.com',
@@ -102,12 +62,12 @@
 
     if (!window.embedded_svc) {
         var s = document.createElement('script');
-        s.setAttribute('src', 'https://[SEU_DOMINIO].my.salesforce.com/embeddedservice/5.0/esw.min.js' );
+        s.setAttribute('src', 'https://segimob--staging.my.salesforce.com/embeddedservice/5.0/esw.min.js' );
         s.onload = function() {
             initESW(null);
         };
         document.body.appendChild(s);
     } else {
-        initESW('https://[SEU_DOMINIO].my.salesforce.com' );
+        initESW('https://segimob--staging.my.salesforce.com' );
     }
 </script>
