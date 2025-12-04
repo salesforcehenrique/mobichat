@@ -1,70 +1,63 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8" />
-  <title>Chat com Salesforce</title>
+  <meta charset="UTF-8">
+  <title>Chat com Salesforce (v2)</title>
 </head>
 <body>
-  <h1>Página de Teste do Chat</h1>
+  <h1>Página de Teste - Chat Salesforce v2</h1>
   <p>O chat será carregado no canto inferior direito.</p>
 
   <script type="text/javascript">
-    var preChatNomeDoUsuarioLogado = "Igor Nogueira Silva";
-    var preChatCPF = "085.094.706-50";
-    var preChatCodigoConta = "C-9";
-    var preChatCodigoUsuario = "U-16010";
+    // Simulando dados do usuário
+    const preChatNomeDoUsuarioLogado = "Igor Nogueira Silva";
+    const preChatCPF = "085.094.706-50";
+    const preChatCodigoConta = "C-9";
+    const preChatCodigoUsuario = "U-16010";
 
-    var initESW = function(gslbBaseURL) {
-      embedded_svc.settings.language = 'pt_BR';
-      embedded_svc.settings.displayHelpButton = true;
+    // Listener para garantir que o Web Chat carregou
+    window.addEventListener("onEmbeddedMessagingReady", function () {
+      console.log("✅ Chat V2 pronto. Setando campos...");
 
-      embedded_svc.settings.extraPrechatFormDetails = [
-        {
-          label: "preChatNomeDoUsuarioLogado",
-          value: preChatNomeDoUsuarioLogado,
-          displayToAgent: true
-        },
-        {
-          label: "preChatCPF",
-          value: preChatCPF,
-          displayToAgent: true
-        },
-        {
-          label: "preChatCodigoConta",
+      // Campos ocultos enviados ao Salesforce
+      embeddedservice_bootstrap.prechatAPI.setHiddenPrechatFields({
+        
+        preChatCodigoConta: preChatCodigoConta
+      });
+
+      // Se quiser campos visíveis no formulário, use este também:
+      /*
+      embeddedservice_bootstrap.prechatAPI.setVisiblePrechatFields({
+        preChatCodigoConta: {
           value: preChatCodigoConta,
-          displayToAgent: true
-        },
-        {
-          label: "preChatCodigoUsuario",
-          value: preChatCodigoUsuario,
-          displayToAgent: true
+          isEditableByEndUser: false
         }
-      ];
+      });
+      */
+    });
 
-      embedded_svc.init(
-        'https://segimob--staging.sandbox.my.salesforce.com',
-        'https://segimob--staging.sandbox.my.site.com/ESWChatMobi1764466409624',
-        '00Dbe000002jTkf',
-        'Chat_Mobi',
-        {
-          baseLiveAgentContentURL: 'https://c.la4-cdn.salesforceliveagent.com/content',
-          deploymentId: 'INSIRA_SEU_DEPLOYMENT_ID',
-          buttonId: 'INSIRA_SEU_BUTTON_ID',
-          baseLiveAgentURL: 'https://d.la4.salesforceliveagent.com/chat',
-          eswLiveAgentDevName: 'Chat_Mobi',
-          isOfflineSupportEnabled: false
-        }
-      );
-    };
+    function initEmbeddedMessaging() {
+      try {
+        embeddedservice_bootstrap.settings.language = 'pt_BR';
 
-    if (!window.embedded_svc) {
-      var s = document.createElement('script');
-      s.setAttribute('src', 'https://segimob--staging.sandbox.my.salesforce.com/embeddedservice/asyncclient/bootstrap.min.js');
-      s.onload = function() { initESW(null); };
-      document.body.appendChild(s);
-    } else {
-      initESW(null);
+        embeddedservice_bootstrap.init(
+          '00Dbe000002jTkf', // ORG_ID
+          'Chat_Mobi',       // Deployment Name (v2)
+          'https://segimob--staging.sandbox.my.site.com/ESWChatMobi1764466409624',
+          {
+            scrt2URL: 'https://segimob--staging.sandbox.my.salesforce-scrt.com'
+          }
+        );
+      } catch (err) {
+        console.error("❌ Erro ao iniciar o chat v2:", err);
+      }
     }
+  </script>
+
+  <script 
+    type="text/javascript" 
+    src="https://segimob--staging.sandbox.my.site.com/ESWChatMobi1764466409624/assets/js/bootstrap.min.js" 
+    onload="initEmbeddedMessaging()">
   </script>
 </body>
 </html>
