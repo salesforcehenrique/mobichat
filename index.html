@@ -15,28 +15,19 @@
     const preChatCodigoConta = "C-9999";
     const preChatCodigoUsuario = "U-9999";
 
-    // Definindo campos de pré-chat antes do init
-    embeddedservice_bootstrap.settings = {
-      prechatConfig: {
-        hiddenFields: {
-          preChatNomeDoUsuarioLogado: preChatNomeDoUsuarioLogado,
-          preChatCPF: preChatCPF,
-          preChatCodigoConta: preChatCodigoConta,
-          preChatCodigoUsuario: preChatCodigoUsuario
-        }
-      },
-      language: 'pt_BR'
-    };
-
-    // Listener opcional para depuração (confirmação visual)
-    window.addEventListener("onEmbeddedMessagingReady", function () {
-      console.log("✅ Chat V2 pronto. Campos já foram definidos.");
-      console.log("📤 Campos enviados:", embeddedservice_bootstrap.prechatAPI.getHiddenPrechatFields());
-    });
-
-    // Inicializa o chat
     function initEmbeddedMessaging() {
       try {
+        // ✅ Define os campos de pré-chat após o bootstrap ser carregado
+        embeddedservice_bootstrap.settings.language = 'pt_BR';
+        embeddedservice_bootstrap.settings.prechatConfig = {
+          hiddenFields: {
+            preChatNomeDoUsuarioLogado,
+            preChatCPF,
+            preChatCodigoConta,
+            preChatCodigoUsuario
+          }
+        };
+
         embeddedservice_bootstrap.init(
           '00Dbe000002jTkf', // ORG_ID
           'Chat_Mobi',       // Deployment Name
@@ -49,9 +40,15 @@
         console.error("❌ Erro ao iniciar o chat v2:", err);
       }
     }
+
+    // Só para visualização no console se quiser debugar
+    window.addEventListener("onEmbeddedMessagingReady", function () {
+      console.log("✅ Chat V2 pronto. Campos foram configurados.");
+      console.log("📤 Campos enviados:", embeddedservice_bootstrap.prechatAPI.getHiddenPrechatFields());
+    });
   </script>
 
-  <!-- Bootstrap Script (carrega o chat e chama o init no onload) -->
+  <!-- Carregamento do chat com onload chamando o init -->
   <script 
     type="text/javascript" 
     src="https://segimob--staging.sandbox.my.site.com/ESWChatMobi1764466409624/assets/js/bootstrap.min.js" 
