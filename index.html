@@ -17,7 +17,6 @@
 
     function initEmbeddedMessaging() {
       try {
-        // ✅ Define os campos de pré-chat após o bootstrap ser carregado
         embeddedservice_bootstrap.settings.language = 'pt_BR';
         embeddedservice_bootstrap.settings.prechatConfig = {
           hiddenFields: {
@@ -41,14 +40,11 @@
       }
     }
 
-    // Só para visualização no console se quiser debugar
     window.addEventListener("onEmbeddedMessagingReady", function () {
-      console.log("✅ Chat V2 pronto. Campos foram configurados.");
-      console.log("📤 Campos enviados:", embeddedservice_bootstrap.prechatAPI.getHiddenPrechatFields());
+      console.log("✅ Chat V2 pronto. Campos ocultos já foram definidos.");
     });
   </script>
 
-  <!-- Carregamento do chat com onload chamando o init -->
   <script 
     type="text/javascript" 
     src="https://segimob--staging.sandbox.my.site.com/ESWChatMobi1764466409624/assets/js/bootstrap.min.js" 
