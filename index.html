@@ -19,23 +19,19 @@
     window.addEventListener("onEmbeddedMessagingReady", function () {
       console.log("✅ Chat V2 pronto. Setando campos...");
 
-      // Campos ocultos enviados ao Salesforce
+      // Enviando os campos ocultos para o Salesforce
       embeddedservice_bootstrap.prechatAPI.setHiddenPrechatFields({
-        
-        preChatCodigoConta: preChatCodigoConta
+        preChatNomeDoUsuarioLogado: preChatNomeDoUsuarioLogado,
+        preChatCPF: preChatCPF,
+        preChatCodigoConta: preChatCodigoConta,
+        preChatCodigoUsuario: preChatCodigoUsuario
       });
 
-      // Se quiser campos visíveis no formulário, use este também:
-      /*
-      embeddedservice_bootstrap.prechatAPI.setVisiblePrechatFields({
-        preChatCodigoConta: {
-          value: preChatCodigoConta,
-          isEditableByEndUser: false
-        }
-      });
-      */
+      // Log para debug no navegador
+      console.log("📤 Prechat fields enviados:", embeddedservice_bootstrap.prechatAPI.getHiddenPrechatFields());
     });
 
+    // Inicializa o chat
     function initEmbeddedMessaging() {
       try {
         embeddedservice_bootstrap.settings.language = 'pt_BR';
