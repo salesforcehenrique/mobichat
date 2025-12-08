@@ -1,54 +1,51 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-  <meta charset="UTF-8">
-  <title>Chat com Salesforce (v2)</title>
-</head>
-<body>
-  <h1>Página de Teste - Chat Salesforce v2</h1>
-  <p>O chat será carregado no canto inferior direito.</p>
+<script type="text/javascript">
+  const preChatNomeDoUsuarioLogado = "Yatagan Farias";
+  const preChatCPF = "123.456.189-10";
+  const preChatCodigoConta = "C-9999";
+  const preChatCodigoUsuario = "U-9999";
 
-  <script type="text/javascript">
-    // Simulando dados do usuário
-    const preChatNomeDoUsuarioLogado = "Yatagan Farias";
-    const preChatCPF = "123.456.189-10";
-    const preChatCodigoConta = "C-9999";
-    const preChatCodigoUsuario = "U-9999";
+  function initEmbeddedMessaging() {
+    try {
+      embeddedservice_bootstrap.settings.language = 'pt_BR';
 
-    function initEmbeddedMessaging() {
-      try {
-        embeddedservice_bootstrap.settings.language = 'pt_BR';
-        embeddedservice_bootstrap.settings.prechatConfig = {
-          hiddenFields: {
+      // Pré-chat oculto (opcional, se não quiser mostrar form)
+      embeddedservice_bootstrap.settings.prechatConfig = {
+        hiddenFields: {
+          preChatNomeDoUsuarioLogado,
+          preChatCPF,
+          preChatCodigoConta,
+          preChatCodigoUsuario
+        }
+      };
+
+      // 🚨 Definindo routingAttributes explicitamente
+      embeddedservice_bootstrap.init(
+        '00Dbe000002jTkf', // ORG_ID
+        'Chat_Mobi',       // Deployment Name
+        'https://segimob--staging.sandbox.my.site.com/ESWChatMobi1764466409624',
+        {
+          scrt2URL: 'https://segimob--staging.sandbox.my.salesforce-scrt.com',
+          // Isso garante que os dados cheguem ao Flow de roteamento
+          routingAttributes: {
             preChatNomeDoUsuarioLogado,
             preChatCPF,
             preChatCodigoConta,
             preChatCodigoUsuario
           }
-        };
-
-        embeddedservice_bootstrap.init(
-          '00Dbe000002jTkf', // ORG_ID
-          'Chat_Mobi',       // Deployment Name
-          'https://segimob--staging.sandbox.my.site.com/ESWChatMobi1764466409624',
-          {
-            scrt2URL: 'https://segimob--staging.sandbox.my.salesforce-scrt.com'
-          }
-        );
-      } catch (err) {
-        console.error("❌ Erro ao iniciar o chat v2:", err);
-      }
+        }
+      );
+    } catch (err) {
+      console.error("❌ Erro ao iniciar o chat v2:", err);
     }
+  }
 
-    window.addEventListener("onEmbeddedMessagingReady", function () {
-      console.log("✅ Chat V2 pronto. Campos ocultos já foram definidos.");
-    });
-  </script>
+  window.addEventListener("onEmbeddedMessagingReady", function () {
+    console.log("✅ Chat V2 pronto. RoutingAttributes definidos corretamente.");
+  });
+</script>
 
-  <script 
-    type="text/javascript" 
-    src="https://segimob--staging.sandbox.my.site.com/ESWChatMobi1764466409624/assets/js/bootstrap.min.js" 
-    onload="initEmbeddedMessaging()">
-  </script>
-</body>
-</html>
+<script
+  type="text/javascript"
+  src="https://segimob--staging.sandbox.my.site.com/ESWChatMobi1764466409624/assets/js/bootstrap.min.js"
+  onload="initEmbeddedMessaging()">
+</script>
