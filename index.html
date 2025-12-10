@@ -2,11 +2,10 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
-  <title>Chat com Salesforce (v2)</title>
+  <title>temporario</title>
 </head>
 <body>
-  <h1>Página de Teste - Chat Salesforce v2</h1>
-  <p>O chat será carregado no canto inferior direito.</p>
+  <h1>temporário</h1>
 
   <script type="text/javascript">
     // 🔧 Dados do usuário autenticado
@@ -20,31 +19,13 @@
         // 🌐 Configurações do Bootstrap
         embeddedservice_bootstrap.settings.language = 'pt_BR';
 
-        // 👇 Opcional: oculta os campos no pre-chat (não usa form visível)
-        embeddedservice_bootstrap.settings.prechatConfig = {
-          hiddenFields: {
-            preChatNomeDoUsuarioLogado,
-            preChatCPF,
-            preChatCodigoConta,
-            preChatCodigoUsuario
-          }
-        };
-
-        // 🚀 Inicializa com routingAttributes explicitamente definidos
+        // 🚀 Inicializa o chat (sem prechatConfig ou routingAttributes, pois o envio é feito via API)
         embeddedservice_bootstrap.init(
           '00Dbe000002jTkf', // ORG_ID
           'Chat_Mobi',       // Deployment API Name
           'https://segimob--staging.sandbox.my.site.com/ESWChatMobi1764466409624', // Site Endpoint
           {
-            scrt2URL: 'https://segimob--staging.sandbox.my.salesforce-scrt.com',
-
-            // 💬 Roteamento inteligente baseado nos atributos abaixo
-            routingAttributes: {
-              preChatNomeDoUsuarioLogado,
-              preChatCPF,
-              preChatCodigoConta,
-              preChatCodigoUsuario
-            }
+            scrt2URL: 'https://segimob--staging.sandbox.my.salesforce-scrt.com'
           }
         );
       } catch (err) {
@@ -54,7 +35,22 @@
 
     // ✅ Evento para indicar que está pronto
     window.addEventListener("onEmbeddedMessagingReady", function () {
-      console.log("✅ Chat V2 pronto. RoutingAttributes definidos corretamente.");
+      console.log("✅ Chat V2 pronto. Enviando dados de pré-chat...");
+
+      // 💬 Envia os dados de pré-chat usando a API correta: setHiddenPrechatFields
+      const preChatData = {
+        preChatNomeDoUsuarioLogado: preChatNomeDoUsuarioLogado,
+        preChatCPF: preChatCPF,
+        preChatCodigoConta: preChatCodigoConta,
+        preChatCodigoUsuario: preChatCodigoUsuario
+      };
+
+      if (window.embeddedservice_bootstrap && window.embeddedservice_bootstrap.prechatAPI && window.embeddedservice_bootstrap.prechatAPI.setHiddenPrechatFields) {
+        window.embeddedservice_bootstrap.prechatAPI.setHiddenPrechatFields(preChatData);
+        console.log("✅ Dados de pré-chat enviados com sucesso:", preChatData);
+      } else {
+        console.error("❌ API setHiddenPrechatFields não disponível.");
+      }
     });
   </script>
 
